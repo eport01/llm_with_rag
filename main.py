@@ -84,8 +84,8 @@ llm = ChatOpenAI(temperature=0.7, model_name=MODEL)
 # set up the conversation memory for the chat
 memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
 
-# the retriever is an abstraction over the VectorStore that will be used during RAG
-retriever = vectorstore.as_retriever()
+# the retriever is an abstraction over the VectorStore that will be used during RAG, k is how many chunks to use
+retriever = vectorstore.as_retriever(search_kwargs={"k": 50})
 
 # putting it together: set up the conversation chain with the GPT 3.5 LLM, the vector store and memory
 conversation_chain = ConversationalRetrievalChain.from_llm(llm=llm, retriever=retriever, memory=memory)
